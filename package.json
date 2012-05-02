@@ -1,42 +1,43 @@
 {
-    "name": "backchatio-api",
-    "description": "BackChat API Client",
-    "version": "0.1.0",
-    "author" : "BackChat.io",
-    "maintainers":[
-        {
-            "name":"sdb",
-            "email":"stefan@backchat.io"
-        },
-        {
-            "name":"casualjim",
-            "email":"ivan@backchat.io"
-        },
-        {
-            "name": "adamburmister",
-            "email": "adam@backchat.io"
-        }
-    ],
-    "repository" : {
-        "type" : "git",
-        "url" : "http://github.com/backchat/backchat-node-client.git"
+  "name": "backchatio-api",
+  "description": "BackChat.io API Client",
+  "version": "0.1.0",
+  "author" : "BackChat.io",
+  "maintainers":[
+    {
+      "name":"sdb",
+      "email":"stefan@backchat.io"
     },
-    "scripts":{
-        "test": "nodeunit test/"
+    {
+      "name":"casualjim",
+      "email":"ivan@backchat.io"
     },
-    "main": "index",
-    "licenses" : [
-    ],
-    "dependencies": {
-        "underscore": "",
-        "request": "",
-        "async": "",
-        "url": "",
-        "string": ""
-    },
-    "devDependencies": {
-    },
-    "engines": ["node >=0.4.0"],
-    "keywords": ["backchat", "api", "swagger", "rest"],
-    "homepage": "https://backchat.io/"
+    {
+      "name": "adamburmister",
+      "email": "adam@backchat.io"
+    }
+  ],
+  "repository" : {
+    "type" : "git",
+    "url" : "http://github.com/mojolly/backchat-node-client.git"
+  },
+  "scripts":{
+    "test": "nodeunit test/"
+  },
+  "main": "index",
+  "licenses" : [{
+    "type" : "MIT",
+    "url" : "http://github.com/mojolly/backchat-node-client/raw/master/LICENSE"
+  }],
+  "dependencies": {
+    "underscore": "",
+    "request": "",
+    "async": "",
+    "url": "",
+    "string": ""
+  },
+  "devDependencies": {},
+  "engines": ["node >=0.4.0"],
+  "keywords": ["backchat", "api", "swagger", "rest"],
+  "homepage": "https://backchat.io/"
 }
