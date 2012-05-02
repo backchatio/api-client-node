@@ -2,79 +2,27 @@ This is a light library to access the Backchat provisioning API
 
 # Installation
 
-    gem install backchat-client
+    npm install backchat
 
 # Current version
 
 0.1
 
-# Getting started
+# Usage
 
-You need a valid api-key to access Backchat API
+You need a valid api-key to access Backchat API.
 
-    require 'backchat-client'
-	bc = Backchat::Client.new("api-key")
-	
-# User Management
+    var Backchat = require('backchat');
 
-## Get user profile
-
-    require 'backchat-client'
-    bc = Backchat::Client.new("api-key")
-    bc.get_profile
-
-## Delete user
-
-    require 'backchat-client'
-    bc = Backchat::Client.new("api-key")
-    bc.delete_user
-
-# Streams
-
-## Create a new stream
-
-    require 'backchat-client'
-    bc = Backchat::Client.new("api-key")
-    bc.create_stream("stream-name")
-
-## Retrieve application streams
-
-    require 'backchat-client'
-    bc = Backchat::Client.new("api-key")
-
-    # get all streams
-    streams = bc.find_stream
-
-    # get a specific stream
-    stream = bc.find_stream("stream-name")
-
-## Delete a stream
-
-    require 'backchat-client'
-    bc = Backchat::Client.new("api-key")
-    bc.destroy_stream("stream-name")
-
-# Channels
-
-## Create a new channel
-
-    require 'backchat-client'
-    bc = Backchat::Client.new("api-key")
-    bc.create_channel("twitter", "juandebravo")
-
-## Retrieve application channels
-
-    require 'backchat-client'
-    bc = Backchat::Client.new("api-key")
-
-    # get all channels
-    streams = bc.find_channel
-
-## Delete a channel
-
-    require 'backchat-client'
-    bc = Backchat::Client.new("api-key")
-    bc.destroy_channel("twitter://juandebravo")
+    Backchat.open('<apiKey>', function(client) {
+        client.account.userDetails(function (errors, data) {
+            if (errors) {
+                console.log(errors);
+            } else {
+                console.log(data);
+            }
+        });
+    });
 
 # License
 
