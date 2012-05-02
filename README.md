@@ -1,49 +1,83 @@
-This is a light library to access the Backchat provisioning API
+# BackChat.io Client for Node.js
 
-# Installation
+This is a light library to access the Backchat provisioning API.
 
-    npm install backchatio-api
-
-# Current version
+## Current version
 
 0.1
 
-# Usage
+## Installation
 
-You need a valid api-key to access Backchat API.
+    npm install backchatio-api
 
-    var Backchat = require('backchat');
+## Usage
 
-    Backchat.open('<apiKey>', function(client) {
+You need a valid API key to access the Backchat API.
+
+Load the `backchatio-api` library.
+
+    var BC = require('backchatio-api');
+
+Open a client.
+
+    BC.backchat.open('<apiKey>', function(client) {
+        ...
+    });
+
+The `open` method requires 2 parameters: `apiKey` and  `callback`. The
+`callback` function must take one parameter, `client`, and is called as soon as
+the client is initialized and ready to be used.
+
+Execute an API operation.
+
+    client['<api>']['<operation>'](args, function (errors, data) {
+        if (errors) {
+            console.log(errors);
+        } else {
+            console.log(data);
+        }
+    });
+
+or equivalent
+
+    client.<api>.<operation>(args, function (errors, data) {
+        ...
+    });
+
+Each API method accepts two parameters: `args` and `callback`. The `callback`
+parameter is always the last parameter when invoking the method. 
+
+The `callback` parameter is required and must be a function. This function is
+called to handle the response and should accept 2 parameters, the first one for
+errors, the second for the data.
+
+The `args` parameter is optional and is only required when you want/need to
+supply arguments for the API operation. The arguments for the operation need to
+be passed in as an object.
+
+Please checkout the BackChat.io API documentation for an overview of all API's and
+operations.
+
+## Examples
+
+Get the account details:
+    
+
+    BC.backchat.open('<apiKey>', function(client) {
         client.account.userDetails(function (errors, data) {
-            if (errors) {
-                console.log(errors);
-            } else {
-                console.log(data);
-            }
+            ...
         });
     });
 
-# License
+Get the details of a stream:
+    
 
-    The MIT License
+    BC.backchat.open('<apiKey>', function(client) {
+        client.streams.streamDetails({streamSlug: '<slug>'}, function (errors, data) {
+            ...
+        });
+    });
 
-    Copyright (c) 2011 Juan de Bravo, Alberto Pastor, Rafael de Oleza.
+## License
 
-    Permission is hereby granted, free of charge, to any person obtaining a copy
-    of this software and associated documentation files (the "Software"), to deal
-    in the Software without restriction, including without limitation the rights
-    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    copies of the Software, and to permit persons to whom the Software is
-    furnished to do so, subject to the following conditions:
-
-    The above copyright notice and this permission notice shall be included in
-    all copies or substantial portions of the Software.
-
-    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-    THE SOFTWARE.
+MIT licensed, check the [LICENSE](https://github.com/mojolly/backchat-node-client/blob/master/LICENSE) file.
