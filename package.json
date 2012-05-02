@@ -1,12 +1,20 @@
 {
-    "name": "backchat",
-    "description": "Backchat API Client",
+    "name": "backchatio-api",
+    "description": "BackChat API Client",
     "version": "0.1.0",
-    "author" : "Bakchat.io",
+    "author" : "BackChat.io",
     "maintainers":[
         {
             "name":"sdb",
-            "email":"andris@node.ee"
+            "email":"stefan@backchat.io"
+        },
+        {
+            "name":"casualjim",
+            "email":"ivan@backchat.io"
+        },
+        {
+            "name": "adamburmister",
+            "email": "adam@backchat.io"
         }
     ],
     "repository" : {
