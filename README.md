@@ -2,7 +2,7 @@ This is a light library to access the Backchat provisioning API
 
 # Installation
 
-    npm install backchat
+    npm install backchatio-api
 
 # Current version
 
