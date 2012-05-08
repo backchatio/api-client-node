@@ -36,7 +36,9 @@
     "url": "",
     "string": ""
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "jasmine-node": ""
+  },
   "engines": ["node >=0.4.0"],
   "keywords": ["backchat", "api", "swagger", "rest"],
   "homepage": "https://backchat.io/"
