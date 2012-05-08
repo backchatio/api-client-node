@@ -10,6 +10,10 @@ This is a light library to access the Backchat provisioning API.
 
     npm install backchatio-api
 
+You can also install the development version from the GitHub repository:
+
+    npm install git://github.com/mojolly/backchat-node-client.git
+
 ## Usage
 
 You need a valid API key to access the Backchat API.
