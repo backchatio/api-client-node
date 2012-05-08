@@ -22,7 +22,7 @@
     "url" : "http://github.com/mojolly/backchat-node-client.git"
   },
   "scripts":{
-    "test": "nodeunit test/"
+    "test": "jasmine-node . --coffee --verbose"
   },
   "main": "index",
   "licenses" : [{
