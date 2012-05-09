@@ -1,6 +1,7 @@
 Index = require("index.js")
 Backchat = Index.backchat
 Swagger = Index.swagger
+_ = require("underscore")
 
 describe "Backchat", ->
 
@@ -20,9 +21,9 @@ describe "Backchat", ->
         Backchat.open @apiKey, @callback
       waits 500
       runs ->
-        expect(Swagger.open).toHaveBeenCalledWith "https://api.backchat.io/1/swagger",
-          Authorization: "Backchat apiKey"
-        , Backchat.responseHandlerFactory, @callback
+        expect(Swagger.open).toHaveBeenCalledWith {url: "https://api.backchat.io/1/swagger"
+        , authHeaders: {"Authorization": "Backchat apiKey"}
+        , responseHandler: Backchat.responseHandlerFactory}, @callback
 
   describe "ResponseHandler", ->
     handler = undefined
