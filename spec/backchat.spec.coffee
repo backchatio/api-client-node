@@ -6,24 +6,36 @@ _ = require("underscore")
 describe "Backchat", ->
 
   describe "open", ->
+    beforeEach ->
+      this.clientCallback = (client) -> client
+      this.expectations = (expectedUrl) ->
+        expectedUrl = expectedUrl || "https://api.backchat.io/1/swagger"
+        expect(Swagger.open).toHaveBeenCalled()
+        expect(this.options.url).toEqual(expectedUrl)
+        expect(this.options.authHeaders).toEqual({"Authorization": "Backchat apiKey"})
+        expect(this.options.responseHandler).toBeDefined
+      that = this
+      spyOn(Swagger, "open").andCallFake (o, cb) ->
+        that.options = o
+        that.callback = cb
 
     it "should throw an error when no argument is passed", ->
       e = new Error("undefined is not a valid apiKey or options object.")
       expect(-> Backchat.open()).toThrow e
 
-    it "should create a Swagger client", ->
-      spyOn Swagger, "open"
-      runs ->
-        @apiKey = "apiKey"
-        that = this
-        @callback = (client) ->
-          that.client = client
-        Backchat.open @apiKey, @callback
-      waits 500
-      runs ->
-        expect(Swagger.open).toHaveBeenCalledWith {url: "https://api.backchat.io/1/swagger"
-        , authHeaders: {"Authorization": "Backchat apiKey"}
-        , responseHandler: Backchat.responseHandlerFactory}, @callback
+    it "should create a Swagger client by passing an apiKey", ->
+      Backchat.open "apiKey", @clientCallback
+      @expectations()
+
+    it "should create a Swagger client by passing an apiKey and options object", ->
+      url = "http://localhost:8080/1/swagger"
+      Backchat.open "apiKey", {url: url}, @clientCallback
+      @expectations(url)
+
+    it "should create a Swagger client by passing an options object", ->
+      url = "http://localhost:8080/1/swagger"
+      Backchat.open {apiKey: "apiKey", url: url}, @clientCallback
+      @expectations(url)
 
   describe "ResponseHandler", ->
     handler = undefined
