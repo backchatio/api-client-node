@@ -1,10 +1,10 @@
 # BackChat.io Client for Node.js
 
-This is a light library to access the Backchat provisioning API.
+This is a light library to access the BackChat.io provisioning API.
 
 ## Current version
 
-0.1
+0.1.1
 
 ## Installation
 
@@ -12,29 +12,32 @@ This is a light library to access the Backchat provisioning API.
 
 You can also install the development version from the GitHub repository:
 
-    npm install git://github.com/mojolly/backchat-node-client.git
+    npm install git://github.com/backchatio/api-client-node.git
 
 ## Usage
 
-You need a valid API key to access the Backchat API.
+You need a valid API key to access BackChat.io.
 
 Load the `backchatio-api` library.
 
-    var BC = require('backchatio-api');
+    var backchat = require('backchatio-api').backchat;
 
-Open a client.
+Create a client.
 
-    BC.backchat.open('<apiKey>', function(client) {
-        ...
+    var client = new backchat.BackchatClient('<apiKey>');
+
+The BackchatClient constructor requires 1 parameter: `apiKey`.
+
+The client emits an event `ready` as soon as the client is initialized and
+ready to be used.
+
+    client.on('ready', function() {
+      ... 
     });
-
-The `open` method requires 2 parameters: `apiKey` and  `callback`. The
-`callback` function must take one parameter, `client`, and is called as soon as
-the client is initialized and ready to be used.
 
 Execute an API operation.
 
-    client['<api>']['<operation>'](args, function (errors, data) {
+    client.api.['<sub_api>']['<operation>'](args, function (errors, data) {
         if (errors) {
             console.log(errors);
         } else {
@@ -44,7 +47,7 @@ Execute an API operation.
 
 or equivalent
 
-    client.<api>.<operation>(args, function (errors, data) {
+    client.<sub_api>.<operation>(args, function (errors, data) {
         ...
     });
 
@@ -67,20 +70,17 @@ operations.
 Get the account details:
     
 
-    BC.backchat.open('<apiKey>', function(client) {
-        client.account.userDetails(function (errors, data) {
-            ...
-        });
+    client.api.account.userDetails(function (errors, data) {
+      ...
     });
 
 Get the details of a stream:
     
-
-    BC.backchat.open('<apiKey>', function(client) {
-        client.streams.streamDetails({streamSlug: '<slug>'}, function (errors, data) {
-            ...
-        });
+    client.api.streams.streamDetails({streamSlug: '<slug>'}, function (errors, data) {
+      ...
     });
+
+Also check out the 'example' directory.
 
 ## License
 
