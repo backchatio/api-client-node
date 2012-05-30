@@ -4,7 +4,7 @@
 #
 # Usage:
 #
-#     coffee examples/user_details.coffee apikey [apihost]
+#     coffee example/user_details.coffee apikey [apihost]
 #
 
 # Requires the `backchat` module
@@ -16,11 +16,12 @@ apiKey = process.argv[2]
 
 # Creates an object with an `url` property to override the resource discovery URL.
 # This step is not required and is only useful for development purposes.
-options = (if process.argv[3] then {url: process.argv[3]} else {})
+options = (if process.argv[3] then {url: process.argv[3], apiKey: apiKey} else apiKey)
 
 # Calls the `open` function and passes in a valid API key (and optionally the extra
 # `options` object) and a callback function.
-Backchat.open apiKey, options, (client) ->
+client = new Backchat.BackchatClient options
+client.on 'ready', (client) ->
   # Calls the `userDetails` method on the `account` API and passes a callback which
   # will be called to provide the results of the operation.
   client.account.userDetails (errors, details) ->

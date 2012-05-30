@@ -5,7 +5,7 @@ _ = require("underscore")
 
 describe "Backchat", ->
 
-  describe "open", ->
+  describe "BackchatClient", ->
     beforeEach ->
       this.clientCallback = (client) -> client
       this.expectations = (expectedUrl) ->
@@ -21,20 +21,15 @@ describe "Backchat", ->
 
     it "should throw an error when no argument is passed", ->
       e = new Error("undefined is not a valid apiKey or options object.")
-      expect(-> Backchat.open()).toThrow e
+      expect(-> new Backchat.BackchatClient()).toThrow e
 
     it "should create a Swagger client by passing an apiKey", ->
-      Backchat.open "apiKey", @clientCallback
+      new Backchat.BackchatClient "apiKey", @clientCallback
       @expectations()
-
-    it "should create a Swagger client by passing an apiKey and options object", ->
-      url = "http://localhost:8080/1/swagger"
-      Backchat.open "apiKey", {url: url}, @clientCallback
-      @expectations(url)
 
     it "should create a Swagger client by passing an options object", ->
       url = "http://localhost:8080/1/swagger"
-      Backchat.open {apiKey: "apiKey", url: url}, @clientCallback
+      new Backchat.BackchatClient {apiKey: "apiKey", url: url}, @clientCallback
       @expectations(url)
 
   describe "ResponseHandler", ->
