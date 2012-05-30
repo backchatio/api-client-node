@@ -21,10 +21,10 @@ options = (if process.argv[3] then {url: process.argv[3], apiKey: apiKey} else a
 # Calls the `open` function and passes in a valid API key (and optionally the extra
 # `options` object) and a callback function.
 client = new Backchat.BackchatClient options
-client.on 'ready', (client) ->
+client.on 'ready', () ->
   # Calls the `userDetails` method on the `account` API and passes a callback which
   # will be called to provide the results of the operation.
-  client.account.userDetails (errors, details) ->
+  client.api.account.userDetails (errors, details) ->
     if errors
       console.log 'Oops, something went wrong!'
       # The first argument `errors` is an array of objects and is only defined in
