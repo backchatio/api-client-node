@@ -19,7 +19,7 @@
   ],
   "repository" : {
     "type" : "git",
-    "url" : "http://github.com/mojolly/backchat-node-client.git"
+    "url" : "http://github.com/backchatio/api-client-node.git"
   },
   "scripts":{
     "test": "jasmine-node . --coffee --verbose"
@@ -27,7 +27,7 @@
   "main": "index",
   "licenses" : [{
     "type" : "MIT",
-    "url" : "http://github.com/mojolly/backchat-node-client/raw/master/LICENSE"
+    "url" : "http://github.com/backchatio/api-client-node/raw/master/LICENSE"
   }],
   "dependencies": {
     "underscore": "",
