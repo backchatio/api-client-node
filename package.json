@@ -22,7 +22,7 @@
     "url" : "http://github.com/backchatio/api-client-node.git"
   },
   "scripts":{
-    "test": "jasmine-node . --coffee --verbose"
+    "test": "node_modules/jasmine-node/bin/jasmine-node . --coffee --verbose"
   },
   "main": "index",
   "licenses" : [{
