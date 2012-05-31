@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>{{ site.title }}</title>
+    
+    <link rel="stylesheet" href="//assets.backchat.io/stylesheets/watercolour.css?129475">
+    <link rel="stylesheet" href="//assets.backchat.io/stylesheets/docs.css?129475">
+    <!-- <link rel="stylesheet" href="stylesheets/pygment_github.css"> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', '{{ site.ga_code }}']);
+      _gaq.push(['_trackPageview']);
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
+  </head>
+  <body>
+    <header class="backchatio">
+      <nav>
+        <div class="centered">
+          <a href="{{ site.sponsor.url }}">
+            <img src="{{ site.sponsor.logo }}" alt="{{ site.sponsor.by_line}} {{ site.sponsor.name }}" height="50" width="180" />
+          </a>
+        </div>
+      </nav>
+      <hgroup>
+        <h1>{{ site.rich_title }}</h1>
+        <h2>{{ site.rich_byline }}</h2>
+      </hgroup>
+    </header>
+    <article class="wrapper">
+      <header id="sidebar" class="fixed-sidebar">
+        <h2>{{ site.title }} <a href="http://travis-ci.org/backchatio/api-client-node"><img src="https://secure.travis-ci.org/backchatio/api-client-node.png?branch=master" alt="Build Status" /></a></h2>
+        <p>{{ site.sub_title }}</p>
+        <p class="view"><a href="https://github.com/{{ site.github.username }}/{{ site.github.project}}">View the Project on GitHub <small>{{ site.github.username }}/{{ site.github.project}}</small></a></p>
+        <p class="view"><a href="server_guide">View the Server guide <small>server guide</small></a></p>
+        <ul>
+          <li><a href="https://github.com/{{ site.github.username }}/{{ site.github.project}}">View On <strong>GitHub</strong></a></li>
+          <li><a href="jsdoc">API docs <strong>Node</strong></a></li>
+          <li></li>
+        </ul>
+        <p>{{ site.sponsor.footer }}</p>
+      </header>
+      <section>
+        {{ content }}
+      </section>
+      
+    </article>
+    <script src="javascripts/scale.fix.js"></script>
+    <script src="//assets.backchat.io/javascripts/fixed-sidebar.js"></script>
+  </body>
+</html>

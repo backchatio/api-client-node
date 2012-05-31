@@ -1,0 +1,23 @@
+---
+auto        : false
+pygments    : false
+markdown    : redcarpet2
+redcarpet:
+  extensions: ["no_intra_emphasis", "fenced_code_blocks", "autolink", "strikethrough", "superscript", "with_toc_data"]
+charset     : UTF-8
+exclude     : ["Gemfile", "Gemfile.lock", "Rakefile"]
+title       : "BackChat.io API Client"
+sub_title   : "A Node.JS library providing easy access to the BackChat.io Platform REST API"
+rich_title  : "<strong>BackChat.io API Client</strong>"
+sponsor:
+  byline    : "Maintained by"
+  logo      : "//assets.backchat.io/images/logo.png"
+  name      : "BackChat.io"
+  url       : "https://backchat.io"
+  footer    : "This project is maintained by <a href=\"https://backchat.io\">BackChat.io</a>, the real-time data filtering API for the cloud."
+
+ga_code     : "UA-240612-7"
+github:
+  username  : "backchatio"
+  project   : "api-client-node"
+destination : "../target/jekyll"
