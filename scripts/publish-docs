@@ -21,8 +21,7 @@ jekyll && \
 cd .. && \
 npm install && \
 npm test && \
-node_modules/jsdoc-toolkit/app/run.js -d=../target/site/jsdoc -t=node_modules/jsdoc-toolkit/templates/codeview lib/backchat.js && \
-cd ../../.. && \
+node_modules/jsdoc-toolkit/app/run.js -d=./target/site/jsdoc -t=node_modules/jsdoc-toolkit/templates/codeview lib/backchat.js && \
 cp -R target/jekyll/* target/site/
 
 # generate yardocs 
