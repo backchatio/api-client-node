@@ -1,0 +1,41 @@
+#!/bin/bash
+
+mkdir -p target
+rm -rf target/site
+git clone git@github.com:backchatio/api-client-node.git target/site
+cd target/site
+git checkout gh-pages
+# clean the old files, ensures no removed pages and files are left in the tree.
+git rm -rf *
+touch .nojekyll
+cat > .gitignore <<DOC
+_site
+_cache
+DOC
+
+echo "1.9.3-p125" >> .rbenv-version
+# generate site 
+cd ../../site
+bundle install && \
+jekyll && \
+cd .. && \
+npm install && \
+npm test && \
+node_modules/jsdoc-toolkit/app/run.js -d=../target/site/jsdoc -t=node_modules/jsdoc-toolkit/templates/codeview lib/backchat.js && \
+cd ../../.. && \
+cp -R target/jekyll/* target/site/
+
+# generate yardocs 
+# first write the yardocs
+# generate scaladoc 
+
+
+# commit changes to gh-pages
+cd target/site
+git add .
+git commit -a -m 'new release'
+git push
+cd ../..
+# avoid a surprised intellij by avoiding an unconfigured git root
+rm -rf target/site
+
