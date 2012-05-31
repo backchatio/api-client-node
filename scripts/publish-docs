@@ -20,8 +20,9 @@ bundle install && \
 jekyll && \
 cd .. && \
 npm install && \
-npm test && \
+# npm test && \
 node_modules/jsdoc-toolkit/app/run.js -d=./target/site/jsdoc -t=node_modules/jsdoc-toolkit/templates/codeview lib/backchat.js && \
+echo `pwd`
 cp -R target/jekyll/* target/site/
 
 # generate yardocs 
@@ -34,7 +35,7 @@ cd target/site
 git add .
 git commit -a -m 'new release'
 git push
-cd ../..
+# cd ../..
 # avoid a surprised intellij by avoiding an unconfigured git root
-rm -rf target/site
+# rm -rf target/site
 
