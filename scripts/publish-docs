@@ -20,7 +20,7 @@ bundle install && \
 jekyll && \
 cd .. && \
 npm install && \
-npm test && \
+# npm test && \
 node_modules/jsdoc-toolkit/app/run.js -d=./target/site/jsdoc -t=node_modules/jsdoc-toolkit/templates/codeview lib/backchat.js && \
 cp -R target/jekyll/* target/site/
 
