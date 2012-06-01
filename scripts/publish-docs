@@ -23,8 +23,8 @@ npm install && \
 # npm test && \
 node_modules/jsdoc-toolkit/app/run.js -d=./target/site/jsdoc -t=node_modules/jsdoc-toolkit/templates/codeview lib/backchat.js && \
 node_modules/docco/bin/docco example/*  && \
-cp docs/* target/site/example && \
-cp -R target/jekyll/* target/site/
+cp -R target/jekyll/* target/site/ && \
+cp docs/* target/site/example
 
 # generate yardocs 
 # first write the yardocs
