@@ -3,9 +3,9 @@ layout: backchatio
 title: BackChat.io API Client
 ---
 
-# BackChat.io Client for Node.js
+# BackChat.io API Client for Node.js
 
-This is a light library to access the BackChat.io provisioning API.
+A Node.JS library providing easy access to the BackChat.io Platform REST API, allowing developers to create/edit/delete message channels, message streams, and configure user accounts programatically.
 
 ## Current version
 
@@ -87,6 +87,8 @@ Get the details of a stream:
 
 Also check out the 'example' directory.
 
-## License
+## Patches
+Patches are gladly accepted from their original author. Along with any patches, please state that the patch is your original work and that you license the work to the *api-client-node* project under the MIT License.
 
-MIT licensed, check the [LICENSE](https://github.com/mojolly/backchat-node-client/blob/master/LICENSE) file.
+## License
+MIT licensed. check the [LICENSE](https://github.com/backchatio/api-client-node/blob/master/LICENSE) file
