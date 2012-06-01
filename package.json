@@ -38,6 +38,7 @@
     "string": ""
   },
   "devDependencies": {
+    "coffee-script": "",
     "jasmine-node": "",
     "jsdoc-toolkit": "",
     "docco": ""
