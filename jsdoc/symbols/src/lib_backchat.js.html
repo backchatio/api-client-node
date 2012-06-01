@@ -1,0 +1,105 @@
+<html><head><meta http-equiv="content-type" content="text/html; charset=utf8"> <style>
+	.KEYW {color: #933;}
+	.COMM {color: #bbb; font-style: italic;}
+	.NUMB {color: #393;}
+	.STRN {color: #393;}
+	.REGX {color: #339;}
+	.line {border-right: 1px dotted #666; color: #666; font-style: normal;}
+	</style></head><body><pre><span class='line'>  1</span> <span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">Swagger</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">require</span><span class="PUNC">(</span><span class="STRN">'./swagger'</span><span class="PUNC">)</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>  2</span> </span><span class="WHIT">    </span><span class="NAME">util</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">require</span><span class="PUNC">(</span><span class="STRN">'util'</span><span class="PUNC">)</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>  3</span> </span><span class="WHIT">    </span><span class="NAME">events</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">require</span><span class="PUNC">(</span><span class="STRN">'events'</span><span class="PUNC">)</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>  4</span> </span><span class="WHIT">    </span><span class="NAME">_</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">require</span><span class="PUNC">(</span><span class="STRN">'underscore'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>  5</span> 
+<span class='line'>  6</span> </span><span class="COMM">/**
+<span class='line'>  7</span>  * The default BackChat.io API resource discovery URL.
+<span class='line'>  8</span>  *
+<span class='line'>  9</span>  * @private
+<span class='line'> 10</span>  */</span><span class="WHIT">
+<span class='line'> 11</span> </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">BackchatApiUrl</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">'https://api.backchat.io/1/swagger'</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 12</span> 
+<span class='line'> 13</span> </span><span class="COMM">/**
+<span class='line'> 14</span>  * Handler for the specific reponse format returned by the BackChat.io API.
+<span class='line'> 15</span>  *
+<span class='line'> 16</span>  * @private
+<span class='line'> 17</span>  * @constructor
+<span class='line'> 18</span>  */</span><span class="WHIT">
+<span class='line'> 19</span> </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">ResponseHandler</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">meta</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 20</span> </span><span class="WHIT">  </span><span class="NAME">this.meta</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">meta</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 21</span> </span><span class="WHIT">  </span><span class="NAME">this.handle</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">error</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">response</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">body</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 22</span> </span><span class="WHIT">    </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">errors</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">data</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">json</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">code</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">response.statusCode</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 23</span> </span><span class="WHIT">    </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">_.include</span><span class="PUNC">(</span><span class="PUNC">[</span><span class="NUMB">401</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NUMB">504</span><span class="PUNC">]</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">code</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 24</span> </span><span class="WHIT">      </span><span class="NAME">errors</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">[</span><span class="PUNC">{</span><span class="NAME">message</span><span class="PUNC">:</span><span class="NAME">body</span><span class="PUNC">}</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 25</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT"> </span><span class="KEYW">else</span><span class="WHIT"> </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">code</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="NUMB">204</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 26</span> </span><span class="WHIT">      </span><span class="NAME">data</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 27</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT"> </span><span class="KEYW">else</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 28</span> </span><span class="WHIT">      </span><span class="NAME">json</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">JSON.parse</span><span class="PUNC">(</span><span class="NAME">body</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 29</span> </span><span class="WHIT">      </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">json.errors</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="NAME">json.errors.length</span><span class="WHIT"> </span><span class="PUNC">></span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 30</span> </span><span class="WHIT">        </span><span class="NAME">errors</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">json.errors</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 31</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT"> </span><span class="KEYW">else</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 32</span> </span><span class="WHIT">        </span><span class="NAME">data</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">Swagger.toData</span><span class="PUNC">(</span><span class="NAME">json.data</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 33</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'> 34</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'> 35</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 36</span> </span><span class="WHIT">      </span><span class="NAME">data</span><span class="PUNC">:</span><span class="NAME">data</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 37</span> </span><span class="WHIT">      </span><span class="NAME">errors</span><span class="PUNC">:</span><span class="NAME">errors</span><span class="WHIT">
+<span class='line'> 38</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 39</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 40</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 41</span> 
+<span class='line'> 42</span> </span><span class="COMM">/**
+<span class='line'> 43</span>  * Creates a new BackChat.io client.
+<span class='line'> 44</span>  *
+<span class='line'> 45</span>  * @class
+<span class='line'> 46</span>  *
+<span class='line'> 47</span>  * The BackchatClient provides a client for BackChat.io. The client emits the following events:
+<span class='line'> 48</span>  * &lt;ul>
+<span class='line'> 49</span>  * &lt;li>'ready' when the client is initialized and ready to be used&lt;/li>
+<span class='line'> 50</span>  * &lt;li>'error' when the client failed to initialize properly&lt;/li>
+<span class='line'> 51</span>  * &lt;/ul>
+<span class='line'> 52</span>  *
+<span class='line'> 53</span>  * Usage:
+<span class='line'> 54</span>  *
+<span class='line'> 55</span>  * &lt;pre>
+<span class='line'> 56</span>  * var client = new backchat.BackchatClient('&lt;api_key>');
+<span class='line'> 57</span>  * client.on('ready', function() {
+<span class='line'> 58</span>  *   client.api.account.userDetails();
+<span class='line'> 59</span>  * });
+<span class='line'> 60</span>  * &lt;/pre>
+<span class='line'> 61</span>  *
+<span class='line'> 62</span>  * @augments events.EventEmitter
+<span class='line'> 63</span>  *
+<span class='line'> 64</span>  * @param {String|Object} options a valid API key or an options object
+<span class='line'> 65</span>  * @param {String} options.apiKey a valid API key
+<span class='line'> 66</span>  * @param {String} [options.url] the api URL
+<span class='line'> 67</span>  *
+<span class='line'> 68</span>  * @property {Object} api the api object for working with the BackChat.io API 
+<span class='line'> 69</span>  *
+<span class='line'> 70</span>  * @throws {Error} if the options argument is undefined or invalid
+<span class='line'> 71</span>  */</span><span class="WHIT">
+<span class='line'> 72</span> </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">BackchatClient</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">options</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 73</span> </span><span class="WHIT">  </span><span class="NAME">events.EventEmitter.call</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 74</span> </span><span class="WHIT">  </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">typeof</span><span class="WHIT"> </span><span class="NAME">options</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="STRN">'undefined'</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 75</span> </span><span class="WHIT">    </span><span class="KEYW">throw</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">Error</span><span class="PUNC">(</span><span class="STRN">'undefined is not a valid apiKey or options object.'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 76</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'> 77</span> </span><span class="WHIT">  </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">typeof</span><span class="WHIT"> </span><span class="NAME">options</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="STRN">'string'</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 78</span> </span><span class="WHIT">    </span><span class="NAME">options</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="NAME">apiKey</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">options</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 79</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'> 80</span> </span><span class="WHIT">  </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">typeof</span><span class="WHIT"> </span><span class="NAME">options</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="STRN">'object'</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 81</span> </span><span class="WHIT">    </span><span class="NAME">options.url</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">options.url</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="NAME">BackchatApiUrl</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 82</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="WHIT"> </span><span class="KEYW">else</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 83</span> </span><span class="WHIT">    </span><span class="KEYW">throw</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">Error</span><span class="PUNC">(</span><span class="STRN">'options is not a valid options object.'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 84</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'> 85</span> </span><span class="WHIT">  </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">self</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">this</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 86</span> </span><span class="WHIT">  </span><span class="NAME">Swagger.open</span><span class="PUNC">(</span><span class="PUNC">{</span><span class="NAME">url</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">options.url</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 87</span> </span><span class="WHIT">    </span><span class="NAME">authHeaders</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="STRN">'Authorization'</span><span class="PUNC">:</span><span class="STRN">'Backchat '</span><span class="PUNC">+</span><span class="NAME">options.apiKey</span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 88</span> </span><span class="WHIT">    </span><span class="NAME">responseHandler</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">op</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT"> </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">ResponseHandler</span><span class="PUNC">(</span><span class="NAME">op</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT"> </span><span class="PUNC">}</span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 89</span> </span><span class="WHIT">    </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">client</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 90</span> </span><span class="WHIT">      </span><span class="NAME">self.api</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">client</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 91</span> </span><span class="WHIT">      </span><span class="NAME">self.emit</span><span class="PUNC">(</span><span class="STRN">'ready'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 92</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 93</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 94</span> 
+<span class='line'> 95</span> </span><span class="NAME">util.inherits</span><span class="PUNC">(</span><span class="NAME">BackchatClient</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">events.EventEmitter</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 96</span> 
+<span class='line'> 97</span> </span><span class="NAME">module.exports.ResponseHandler</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">ResponseHandler</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 98</span> </span><span class="NAME">module.exports.BackchatClient</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">BackchatClient</span><span class="PUNC">;</span></pre></body></html>
