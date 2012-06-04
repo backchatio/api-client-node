@@ -18,9 +18,10 @@ apiKey = process.argv[2]
 # This step is not required and is only useful for development purposes.
 options = (if process.argv[3] then {url: process.argv[3], apiKey: apiKey} else apiKey)
 
-# Calls the `open` function and passes in a valid API key (and optionally the extra
-# `options` object) and a callback function.
+# Creates a new client and passes in a valid API key (and optionally the extra
+# `options` object).
 client = new Backchat.BackchatClient options
+# When the client is ready to be used
 client.on 'ready', () ->
   # Calls the `userDetails` method on the `account` API and passes a callback which
   # will be called to provide the results of the operation.
@@ -39,3 +40,7 @@ client.on 'ready', () ->
       console.log 'Email: %s', details.email
       console.log 'Login: %s', details.login
       console.log 'API key: %s', details.apiKey
+
+# When the client can't connect to the BackChat API
+client.on 'error', () ->
+  console.log "Couldn't connect to BackChat API: %s", client.errors
