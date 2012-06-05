@@ -22,9 +22,9 @@ apiKey = process.argv[2]
 # This step is not required and is only useful for development purposes.
 options = (if process.env.BC_HOST then {url: process.env.BC_HOST, apiKey: apiKey} else apiKey)
 
-# Creates a new client and passes in a valid API key (and optionally the extra
-# `options` object).
+# Creates a new client and passes in a valid API key or an options object
 client = new Backchat.BackchatClient options
+
 # When the client is ready to be used
 client.on 'ready', () ->
   # Calls the `createChannel` method on the `channels` API and passes a callback which

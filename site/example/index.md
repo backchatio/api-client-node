@@ -10,3 +10,5 @@ This is an overview of examples using the BackChat.io API client. The example do
 ## CoffeeScript
 
 * [User details](user_details.html)
+* [Create channel](create_channel.html)
+* [Delete channel](delete_channel.html)
