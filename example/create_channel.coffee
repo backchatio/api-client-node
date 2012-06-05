@@ -1,10 +1,14 @@
 #
-# This example demonstrates how to get the account details with
+# This example demonstrates how to add a new channel with
 # the BackChat.io API cllient.
 #
 # Usage:
 #
-#     coffee example/user_details.coffee apikey
+#     coffee example/create_channel.coffee apikey channel
+#
+# Example:
+#
+#     coffee example/create_channel.coffee bf5c48b9df106cb1e4da7722ec2085a5 'twitter://backchatio'
 #
 
 # Requires the `backchat` module
@@ -23,9 +27,9 @@ options = (if process.env.BC_HOST then {url: process.env.BC_HOST, apiKey: apiKey
 client = new Backchat.BackchatClient options
 # When the client is ready to be used
 client.on 'ready', () ->
-  # Calls the `userDetails` method on the `account` API and passes a callback which
+  # Calls the `createChannel` method on the `channels` API and passes a callback which
   # will be called to provide the results of the operation.
-  client.api.account.userDetails (errors, details) ->
+  client.api.channels.createChannel {uri: process.argv[3]}, (errors, channel) ->
     if errors
       console.log 'Oops, something went wrong!'
       # The first argument `errors` is an array of objects and is only defined in
@@ -36,10 +40,12 @@ client.on 'ready', () ->
     else
       # If everything went well, the second parameter contains the data returned
       # by the server.
-      console.log 'Name: %s %s', details.firstName, details.lastName
-      console.log 'Email: %s', details.email
-      console.log 'Login: %s', details.login
-      console.log 'API key: %s', details.apiKey
+      console.log 'Channel created successfully!'
+      console.log 'Channel URI: %s', channel.uri
+      console.log 'Canonical URI: %s', channel.expanded.canonicalUri
+      console.log 'Target: %s', channel.expanded.target
+      console.log 'Source: %s', channel.expanded.source
+      console.log 'Kind: %s', channel.expanded.kind
 
 # When the client can't connect to the BackChat API
 client.on 'error', () ->
