@@ -14,3 +14,5 @@ This is an overview of examples using the BackChat.io API client. The example do
 * [Delete channel](delete_channel.html)
 * [Compose an URI from an original URI](compose_uri_from_original.html)
 * [Expand an URI](expand_uri.html)
+* [List messages from a stream](get_messages.html)
+* [Stream details](stream_details.html)
